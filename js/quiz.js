@@ -77,46 +77,49 @@ function showQuestion() {
     const questionEl = document.getElementById('quizQuestion');
     const answersEl = document.getElementById('quizAnswers');
     const progressEl = document.getElementById('progressBar');
-    
+
     const question = quizData[currentQuestion];
-    
+
     // Показываем текст вопроса
     questionEl.innerHTML = `<div>${question.question}</div>`;
 
     // Очищаем старые ответы
     answersEl.innerHTML = '';
 
-    // Создаем кнопки для вариантов
+    // Создаем кнопки для вариантов (ничего не меняем в стиле)
     question.answers.forEach((answer, index) => {
         const answerBtn = document.createElement('div');
         answerBtn.className = 'quiz-answer';
         answerBtn.textContent = answer;
-        answerBtn.onclick = () => checkAnswer(index); // обработка клика
+
+        // Добавляем обработку клика и тач-события для телефона
+        answerBtn.onclick = () => checkAnswer(index);
+        answerBtn.addEventListener('touchstart', () => checkAnswer(index));
+
         answersEl.appendChild(answerBtn);
     });
 
-    // Прогресс-бар (теперь доходят до 100%)
+    // Прогресс-бар
     progressEl.style.width = `${((currentQuestion + 1) / quizData.length) * 100}%`;
 }
 
-// ---------------------------
-// Проверка ответа и показ факта вместо вопроса
-// ---------------------------
 function checkAnswer(selectedIndex) {
     const question = quizData[currentQuestion];
-    const correctAnswer = question.correct.trim(); // убираем лишние пробелы
+    const correctAnswer = question.correct.trim();
     const answers = document.querySelectorAll('.quiz-answer');
 
-    // Отключаем повторные клики
-    answers.forEach(btn => btn.onclick = null);
+    // Отключаем клики после выбора
+    answers.forEach(btn => {
+        btn.onclick = null;
+        btn.ontouchstart = null;
+    });
 
-    // Проверяем выбранный вариант
+    // Подсветка выбранного варианта
     if (answers[selectedIndex].textContent.trim() === correctAnswer) {
         answers[selectedIndex].classList.add('correct');
         score++;
     } else {
         answers[selectedIndex].classList.add('wrong');
-        // Подсвечиваем правильный вариант
         answers.forEach(btn => {
             if (btn.textContent.trim() === correctAnswer) {
                 btn.classList.add('correct');
@@ -124,17 +127,17 @@ function checkAnswer(selectedIndex) {
         });
     }
 
-    // Заменяем вопрос на факт через небольшую паузу
+    // Заменяем вопрос на факт полностью (ничего не меняем в стиле кнопок)
     setTimeout(() => {
-        const questionEl = document.getElementById('quizQuestion');
-        questionEl.innerHTML = `<div style="font-style: italic; text-align: center; padding: 15px; background: rgba(255,77,109,0.2); border-radius: 10px;">${question.fact}</div>`;
-        // убираем кнопки ответов
+        document.getElementById('quizQuestion').innerHTML =
+            `<div>${question.fact}</div>`;
         document.getElementById('quizAnswers').innerHTML = '';
-    }, 500);
+    }, 300);
 
     // Переход к следующему вопросу через 2.5 секунды
     setTimeout(nextQuestion, 2500);
 }
+
 
 // ---------------------------
 // Следующий вопрос
@@ -192,7 +195,7 @@ document.addEventListener('keydown', (e) => {
         checkAnswer(num - 1); // массив начинается с 0
     }
 });
-
+    
 // ---------------------------
 // Инициализация теста при загрузке страницы
 // ---------------------------
