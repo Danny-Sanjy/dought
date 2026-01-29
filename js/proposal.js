@@ -1,10 +1,15 @@
 document.addEventListener('DOMContentLoaded', () => {
     const proposalBtn = document.getElementById('proposalBtn');
     if (proposalBtn) {
-        proposalBtn.addEventListener('click', function() {
-            this.style.display = 'none';
-            document.getElementById('proposalQuestion').classList.add('show');
-        });
+        // click + touch для мобильных
+        proposalBtn.addEventListener('click', showProposal);
+        proposalBtn.addEventListener('touchstart', showProposal);
+    }
+
+    function showProposal(e) {
+        e.preventDefault(); // предотвращаем двойной срабатывание на мобильных
+        this.style.display = 'none';
+        document.getElementById('proposalQuestion').classList.add('show');
     }
 });
 
@@ -15,21 +20,26 @@ function showMessage(content, bgColor = 'rgba(0,0,0,0.7)') {
     message.style.top = '50%';
     message.style.left = '50%';
     message.style.transform = 'translate(-50%, -50%)';
-    message.style.padding = '30px';
+    
+    // Адаптивный фон для мобильных
+    message.style.width = '90%';
+    message.style.maxWidth = '480px'; // ограничиваем на больших экранах
+    message.style.padding = '20px';
     message.style.borderRadius = '15px';
     message.style.textAlign = 'center';
     message.style.zIndex = '9999';
     message.style.backgroundColor = bgColor;
     message.style.color = '#fff';
-    message.innerHTML = content;
+    message.style.wordWrap = 'break-word';
+    message.style.fontSize = '1rem';
+    message.style.boxShadow = '0 4px 20px rgba(0,0,0,0.3)';
 
+    message.innerHTML = content;
     document.body.appendChild(message);
 
     // Автоудаление через 5 секунд
     setTimeout(() => {
-        if (message.parentNode) {
-            message.parentNode.removeChild(message);
-        }
+        if (message.parentNode) message.parentNode.removeChild(message);
     }, 5000);
 }
 
@@ -37,38 +47,38 @@ function acceptProposal() {
     createFireworks();
 
     const content = `
-        <h1 style="font-size: 4rem; color: #ff4d6d; margin-bottom: 20px; font-family: 'Playfair Display', serif;">❤️ ДА! ❤️</h1>
-        <p style="font-size: 2rem; font-family: 'Montserrat', sans-serif;">Я так счастлив! Ты сделала меня самым счастливым человеком на свете!</p>
-        <p style="font-size: 1.5rem; margin-top: 20px; font-family: 'Montserrat', sans-serif;">Теперь мы будем вместе вечно 💕</p>
+        <h1 style="font-size: 3rem; color: #ff4d6d; margin-bottom: 15px; font-family: 'Playfair Display', serif;">❤️ ДА! ❤️</h1>
+        <p style="font-size: 1.5rem; font-family: 'Montserrat', sans-serif;">Я так счастлив! Ты сделала меня самым счастливым человеком на свете!</p>
+        <p style="font-size: 1.2rem; margin-top: 15px; font-family: 'Montserrat', sans-serif;">Теперь мы будем вместе вечно 💕</p>
     `;
     showMessage(content, 'rgba(255, 77, 109, 0.9)');
 
-    // Вибрация телефона (если поддерживается)
-    if (navigator.vibrate) {
-        navigator.vibrate([200, 100, 200, 100, 200]);
-    }
+    if (navigator.vibrate) navigator.vibrate([200, 100, 200, 100, 200]);
 }
 
 function declineProposal() {
     createRain();
 
     const content = `
-        <h1 style="font-size: 3rem; color: #f44336; margin-bottom: 20px; font-family: 'Playfair Display', serif;">💔 Вот оно как...</h1>
-        <p style="font-size: 2rem; font-family: 'Montserrat', sans-serif;">Очень жаль...</p>
-        <p style="font-size: 1.5rem; margin-top: 20px; font-family: 'Montserrat', sans-serif;">Но я всё равно буду любить тебя...</p>
+        <h1 style="font-size: 2.5rem; color: #f44336; margin-bottom: 15px; font-family: 'Playfair Display', serif;">💔 Вот оно как...</h1>
+        <p style="font-size: 1.5rem; font-family: 'Montserrat', sans-serif;">Очень жаль...</p>
+        <p style="font-size: 1.2rem; margin-top: 15px; font-family: 'Montserrat', sans-serif;">Но я всё равно буду любить тебя...</p>
     `;
     showMessage(content, 'rgba(244, 67, 54, 0.9)');
 }
 
 function createFireworks() {
-    for (let i = 0; i < 100; i++) {
+    const countHearts = window.innerWidth < 500 ? 50 : 100; // меньше на мобиле
+    const countConfetti = window.innerWidth < 500 ? 100 : 200;
+
+    for (let i = 0; i < countHearts; i++) {
         setTimeout(() => {
             const heart = document.createElement('div');
             heart.className = 'hearts-float';
             heart.innerHTML = '❤️';
             heart.style.left = `${Math.random() * 100}%`;
             heart.style.color = `hsl(${Math.random() * 360}, 70%, 60%)`;
-            heart.style.fontSize = `${20 + Math.random() * 30}px`;
+            heart.style.fontSize = `${15 + Math.random() * 25}px`; // чуть меньше на телефоне
             document.body.appendChild(heart);
 
             setTimeout(() => {
@@ -77,14 +87,14 @@ function createFireworks() {
         }, i * 50);
     }
 
-    for (let i = 0; i < 200; i++) {
+    for (let i = 0; i < countConfetti; i++) {
         setTimeout(() => {
             const confetti = document.createElement('div');
             confetti.className = 'confetti';
             confetti.style.left = `${Math.random() * 100}%`;
             confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 70%, 60%)`;
-            confetti.style.width = `${5 + Math.random() * 10}px`;
-            confetti.style.height = `${5 + Math.random() * 10}px`;
+            confetti.style.width = `${4 + Math.random() * 8}px`;
+            confetti.style.height = `${4 + Math.random() * 8}px`;
             confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
             document.body.appendChild(confetti);
 
@@ -96,7 +106,8 @@ function createFireworks() {
 }
 
 function createRain() {
-    for (let i = 0; i < 200; i++) {
+    const countDrops = window.innerWidth < 500 ? 100 : 200;
+    for (let i = 0; i < countDrops; i++) {
         const drop = document.createElement('div');
         drop.className = 'rain';
         drop.style.left = `${Math.random() * 100}%`;
