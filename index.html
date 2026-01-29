@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Для Самой Прекрасной ❤️</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap');
+    </style>
+</head>
+<body>
+    <!-- Звёздное небо -->
+    <div class="stars" id="stars"></div>
+
+    <!-- Главная секция -->
+    <section id="home" class="home-section">
+        <div class="container">
+            <div class="title">
+                <h1>❤️ Для тебя  Любимая❤️</h1>
+                <p></p>
+            </div>
+            <button class="start-btn" onclick="scrollToSection('hearts')">Нажми если интересно</button>
+        </div>
+    </section>
+
+    <!-- Падающие сердца -->
+    <section id="hearts" class="hearts-section">
+        <div class="section-title">
+            <h2>💌 небольшой текст для тебя💝</h2>
+            <p>Каждый раз, когда я смотрю на тебя, я понимаю, насколько сильно люблю тебя. 
+                Ты моя радость, моя поддержка и мое вдохновение.
+                 С тобой каждый день становится особенным, каждое мгновение  ценным.
+                  Твоя улыбка согревает моё сердце, а твой смех делает мир ярче. 
+                  Я люблю тебя не за что-то одно, а за всё , за твои мечты, за твою доброту, за то, как ты умеешь быть собой. И знаешь, 
+                  я хочу идти рядом с тобой по жизни, поддерживать тебя, радоваться вместе и делить каждый момент.
+                   Я люблю тебя так, как слова порой не могут передать,
+                    и каждое -я люблю тебя-
+                    это лишь маленькая часть того, что я чувствую.</p>
+        </div>
+        <div class="scene" id="scene"></div>
+    </section>
+
+    <!-- Галерея -->
+    <section id="gallery" class="gallery-section">
+        <div class="section-title">
+            <h2>ну типо милые фотки тебя... </h2>
+            
+        </div>
+        <div class="gallery-container">
+            <button class="gallery-btn prev" onclick="changeSlide(-1)">❮</button>
+            <div class="gallery-track" id="galleryTrack"></div>
+            <button class="gallery-btn next" onclick="changeSlide(1)">❯</button>
+        </div>
+        <div class="gallery-dots" id="galleryDots"></div>
+    </section>
+
+    <!-- Пазл -->
+    <section id="puzzle" class="puzzle-section">
+        <div class="section-title">
+            <h2>🧩 Собери картинку</h2>
+            <p>Сложи пазл и открой сюрприз!</p>
+        </div>
+        <div class="puzzle-container">
+            <div class="puzzle-controls">
+                <select id="puzzleImageSelect" onchange="changePuzzleImage()">
+                    <option value="https://picsum.photos/seed/love1/600/600">Наше первое фото</option>
+                    <option value="https://picsum.photos/seed/love2/600/600">Ты улыбаешься</option>
+                    <option value="https://picsum.photos/seed/love3/600/600">Романтический момент</option>
+                    <option value="custom">Загрузить своё фото</option>
+                </select>
+                <input type="file" id="customImage" accept="image/*" style="display: none;" onchange="loadCustomImage()">
+                <button class="puzzle-btn" onclick="shufflePuzzle()">Перемешать</button>
+                <button class="puzzle-btn" onclick="resetPuzzle()">Сбросить</button>
+            </div>
+            <div class="puzzle-board" id="puzzleBoard"></div>
+            <div class="puzzle-message" id="puzzleMessage">
+                <h3>❤️ Ты собрала пазл! ❤️</h3>
+                <p>Это фото напоминает мне, как сильно я тебя люблю...</p>
+                <button class="puzzle-btn" onclick="shufflePuzzle()">Собрать снова</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Тест -->
+    <section id="quiz" class="quiz-section">
+        <div class="section-title">
+            <h2>📝 Кавепзные вопросики </h2>
+            <p>Проверим  всё ли ты помнишь  </p>
+        </div>
+        <div class="quiz-container">
+            <div class="quiz-question" id="quizQuestion"></div>
+            <div class="quiz-answers" id="quizAnswers"></div>
+            <div class="quiz-progress">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+            <div class="quiz-result" id="quizResult">
+                <h3 id="resultTitle"></h3>
+                <p id="resultMessage"></p>
+                <div class="result-score" id="resultScore"></div>
+                <button class="quiz-btn" onclick="restartQuiz()">Пройти снова</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Предложение -->
+    <section id="proposal" class="proposal-section">
+        <div class="section-title">
+            <h2>✨ Специальный Вопрос Для Тебя ✨</h2>
+            <p>Нажми на кнопку, если тебе интересно...</p>
+        </div>
+        <div class="proposal-container">
+            <button class="proposal-btn" id="proposalBtn">Нажми если интересно</button>
+            <div class="proposal-question" id="proposalQuestion">
+                <h3>💌 Вопрос, который изменил мою жизнь...</h3>
+                <p>Ты согласишься провести остаток своей жизни со мной?</p>
+                <div class="proposal-options">
+                    <button class="proposal-option yes" onclick="acceptProposal()">Да ❤️</button>
+                    <button class="proposal-option no" onclick="declineProposal()">Нет 💔</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Скрипты -->
+    <script src="js/main.js"></script>
+    <script src="js/hearts.js"></script>
+    <script src="js/gallery.js"></script>
+    <script src="js/puzzle.js"></script>
+    <script src="js/quiz.js"></script>
+    <script src="js/proposal.js"></script>
+</body>
+</html>
