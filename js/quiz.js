@@ -5,14 +5,14 @@ const quizData = [
     {
         question: "Какого числа мы познакомились?",
         answers: ["15 марта", "23 апреля", "7 мая", "11 июня"],
-        correct: '11 июня', // <- правильный ответ
+        correct: '11 июня',
         fact: "Это был прекрасный день, который изменил мою жизнь навсегда ❤️"
     },
     {
         question: "Когда мы начали встречаться ?",
         answers: ["11 марта", "12 октября", "21 августа", "13 октября"],
         correct: '13 октября',
-        fact: "смотри ка, помнит !"
+        
     },
     {
         question: "Сколько детей у нас будет?",
@@ -24,7 +24,7 @@ const quizData = [
         question: "Какого цвета у меня глаза",
         answers: ["зелёные", "Синие", "Чёрные", "Карие"],
         correct: 'зелёные',
-        fact: "В розовом ты выглядишь как настоящая принцесса 👑"
+      
     },
     {
         question: "Мой любимый перс?",
@@ -64,6 +64,9 @@ const quizData = [
     }
 ];
 
+// ---------------------------
+// Переменные для текущего состояния теста
+// ---------------------------
 let currentQuestion = 0; // индекс текущего вопроса
 let score = 0;           // количество правильных ответов
 
@@ -77,13 +80,13 @@ function showQuestion() {
     
     const question = quizData[currentQuestion];
     
-    // Показываем вопрос
+    // Показываем текст вопроса
     questionEl.innerHTML = `<div>${question.question}</div>`;
 
     // Очищаем старые ответы
     answersEl.innerHTML = '';
 
-    // Показываем варианты ответов
+    // Создаем кнопки для вариантов
     question.answers.forEach((answer, index) => {
         const answerBtn = document.createElement('div');
         answerBtn.className = 'quiz-answer';
@@ -94,21 +97,17 @@ function showQuestion() {
 
     // Прогресс-бар (теперь доходят до 100%)
     progressEl.style.width = `${((currentQuestion + 1) / quizData.length) * 100}%`;
-
-    // Убираем старый факт, если есть
-    const oldFact = document.getElementById('quizFact');
-    if (oldFact) oldFact.remove();
 }
 
 // ---------------------------
-// Проверка ответа
+// Проверка ответа и показ факта вместо вопроса
 // ---------------------------
 function checkAnswer(selectedIndex) {
     const question = quizData[currentQuestion];
     const correctAnswer = question.correct.trim(); // убираем лишние пробелы
     const answers = document.querySelectorAll('.quiz-answer');
 
-    // Отключаем возможность кликать повторно
+    // Отключаем повторные клики
     answers.forEach(btn => btn.onclick = null);
 
     // Проверяем выбранный вариант
@@ -117,7 +116,7 @@ function checkAnswer(selectedIndex) {
         score++;
     } else {
         answers[selectedIndex].classList.add('wrong');
-        // подсвечиваем правильный ответ
+        // Подсвечиваем правильный вариант
         answers.forEach(btn => {
             if (btn.textContent.trim() === correctAnswer) {
                 btn.classList.add('correct');
@@ -125,23 +124,15 @@ function checkAnswer(selectedIndex) {
         });
     }
 
-    // Показ факта после небольшой задержки
+    // Заменяем вопрос на факт через небольшую паузу
     setTimeout(() => {
-        const factDiv = document.createElement('div');
-        factDiv.id = 'quizFact'; // id нужен для удаления старого факта
-        factDiv.style.cssText = `
-            margin-top: 20px;
-            padding: 15px;
-            background: rgba(255, 77, 109, 0.2);
-            border-radius: 10px;
-            text-align: center;
-            font-style: italic;
-        `;
-        factDiv.textContent = question.fact;
-        document.getElementById('quizQuestion').appendChild(factDiv);
+        const questionEl = document.getElementById('quizQuestion');
+        questionEl.innerHTML = `<div style="font-style: italic; text-align: center; padding: 15px; background: rgba(255,77,109,0.2); border-radius: 10px;">${question.fact}</div>`;
+        // убираем кнопки ответов
+        document.getElementById('quizAnswers').innerHTML = '';
     }, 500);
 
-    // Переход к следующему вопросу через 2.5 секунды (можно менять)
+    // Переход к следующему вопросу через 2.5 секунды
     setTimeout(nextQuestion, 2500);
 }
 
@@ -150,7 +141,6 @@ function checkAnswer(selectedIndex) {
 // ---------------------------
 function nextQuestion() {
     currentQuestion++;
-    
     if (currentQuestion < quizData.length) {
         showQuestion();
     } else {
@@ -159,7 +149,7 @@ function nextQuestion() {
 }
 
 // ---------------------------
-// Показ результатов
+// Показ результатов (только пример)
 // ---------------------------
 function showResult() {
     const resultEl = document.getElementById('quizResult');
@@ -194,17 +184,17 @@ function restartQuiz() {
 }
 
 // ---------------------------
-// Поддержка выбора цифрой с клавиатуры (1,2,3,4)
+// Поддержка выбора цифрой с клавиатуры (1-4)
 // ---------------------------
 document.addEventListener('keydown', (e) => {
     const num = parseInt(e.key);
     if (!isNaN(num) && num >= 1 && num <= quizData[currentQuestion].answers.length) {
-        checkAnswer(num - 1); // вычитаем 1, так как массив начинается с 0
+        checkAnswer(num - 1); // массив начинается с 0
     }
 });
 
 // ---------------------------
-// Инициализация при загрузке страницы
+// Инициализация теста при загрузке страницы
 // ---------------------------
 document.addEventListener('DOMContentLoaded', () => {
     const quizSection = document.getElementById('quiz');
