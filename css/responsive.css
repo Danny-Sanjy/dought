@@ -1,0 +1,147 @@
+@media (max-width: 992px) {
+    .section-title h2 {
+        font-size: 2.5rem;
+    }
+    
+    .gallery-container {
+        height: 400px;
+    }
+    
+    .gallery-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .title h1 {
+        font-size: 2.8rem;
+    }
+    
+    .title p {
+        font-size: 1.2rem;
+    }
+    
+    .start-btn {
+        padding: 15px 40px;
+        font-size: 1.3rem;
+    }
+    
+    .section-title h2 {
+        font-size: 2rem;
+    }
+    
+    .section-title p {
+        font-size: 1rem;
+    }
+    
+    .gallery-container {
+        height: 350px;
+    }
+    
+    .gallery-btn {
+        width: 45px;
+        height: 45px;
+        font-size: 1.3rem;
+    }
+    
+    .gallery-btn.prev { left: 10px; }
+    .gallery-btn.next { right: 10px; }
+    
+    .gallery-slide .caption {
+        font-size: 1.2rem;
+        bottom: 20px;
+    }
+    
+    .puzzle-container {
+        padding: 20px;
+    }
+    
+    .puzzle-controls {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .puzzle-controls select,
+    .puzzle-btn {
+        width: 100%;
+        max-width: 300px;
+    }
+    
+    .puzzle-board {
+        height: 300px;
+    }
+    
+    .quiz-question {
+        font-size: 1.5rem;
+        min-height: 80px;
+    }
+    
+    .quiz-answer {
+        padding: 15px;
+        font-size: 1rem;
+    }
+    
+    .proposal-btn {
+        padding: 20px 40px;
+        font-size: 1.5rem;
+    }
+    
+    .proposal-options {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .proposal-option {
+        padding: 20px;
+        font-size: 1.3rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .title h1 {
+        font-size: 2.3rem;
+    }
+    
+    section {
+        padding: 60px 15px;
+    }
+    
+    .gallery-container {
+        height: 300px;
+    }
+    
+    .gallery-slide .caption {
+        font-size: 1rem;
+    }
+    
+    .puzzle-board {
+        height: 280px;
+    }
+    
+    .quiz-container {
+        padding: 30px 20px;
+    }
+    
+    .quiz-question {
+        font-size: 1.3rem;
+    }
+    
+    .result-score {
+        font-size: 2.5rem;
+    }
+    
+    .proposal-btn {
+        padding: 18px 35px;
+        font-size: 1.4rem;
+    }
+    
+    .proposal-question h3 {
+        font-size: 2rem;
+    }
+    
+    .proposal-question p {
+        font-size: 1.6rem;
+    }
+}
