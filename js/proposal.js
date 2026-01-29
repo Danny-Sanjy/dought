@@ -47,11 +47,11 @@ function acceptProposal() {
     createFireworks();
 
     const content = `
-        <h1 style="font-size: 3rem; color: #ff4d6d; margin-bottom: 15px; font-family: 'Playfair Display', serif;">❤️ ДА! ❤️</h1>
+        <h1 style="font-size: 3rem; color: #f9114f; margin-bottom: 15px; font-family: 'Playfair Display', serif;">❤️ ДА! ❤️</h1>
         <p style="font-size: 1.5rem; font-family: 'Montserrat', sans-serif;">Я так счастлив! Ты сделала меня самым счастливым человеком на свете!</p>
         <p style="font-size: 1.2rem; margin-top: 15px; font-family: 'Montserrat', sans-serif;">Теперь мы будем вместе вечно 💕</p>
     `;
-    showMessage(content, 'rgba(255, 77, 109, 0.9)');
+    showMessage(content, 'rgba(77, 75, 76, 0.9)');
 
     if (navigator.vibrate) navigator.vibrate([200, 100, 200, 100, 200]);
 }
@@ -60,11 +60,11 @@ function declineProposal() {
     createRain();
 
     const content = `
-        <h1 style="font-size: 2.5rem; color: #f44336; margin-bottom: 15px; font-family: 'Playfair Display', serif;">💔 Вот оно как...</h1>
+        <h1 style="font-size: 2.5rem; color: #f43636; margin-bottom: 15px; font-family: 'Playfair Display', serif;">💔 Вот оно как...</h1>
         <p style="font-size: 1.5rem; font-family: 'Montserrat', sans-serif;">Очень жаль...</p>
         <p style="font-size: 1.2rem; margin-top: 15px; font-family: 'Montserrat', sans-serif;">Но я всё равно буду любить тебя...</p>
     `;
-    showMessage(content, 'rgba(244, 67, 54, 0.9)');
+    showMessage(content, 'rgba(75, 75, 75, 0.9)');
 }
 
 function createFireworks() {
